@@ -116,12 +116,16 @@ public class PdfGeneratorService {
             totalTable.addCell(getCell("GST:", PdfPCell.ALIGN_RIGHT));
             totalTable.addCell(getCell(String.valueOf(bill.getGst()), PdfPCell.ALIGN_RIGHT));
             
-            PdfPCell grandTotalLabel = getCell("Grand Total:", PdfPCell.ALIGN_RIGHT);
-            grandTotalLabel.getFont().setStyle(Font.BOLD);
+            PdfPCell grandTotalLabel = new PdfPCell(new Phrase("Grand Total:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
+            grandTotalLabel.setPadding(8);
+            grandTotalLabel.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+            grandTotalLabel.setBorder(PdfPCell.NO_BORDER);
             totalTable.addCell(grandTotalLabel);
             
-            PdfPCell grandTotalValue = getCell(String.valueOf(bill.getGrandTotal()), PdfPCell.ALIGN_RIGHT);
-            grandTotalValue.getFont().setStyle(Font.BOLD);
+            PdfPCell grandTotalValue = new PdfPCell(new Phrase(String.valueOf(bill.getGrandTotal()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
+            grandTotalValue.setPadding(8);
+            grandTotalValue.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+            grandTotalValue.setBorder(PdfPCell.NO_BORDER);
             totalTable.addCell(grandTotalValue);
 
             document.add(totalTable);
