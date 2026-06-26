@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BillService {
-  private apiUrl = 'http://localhost:8080/api/bills';
+  private apiUrl = 'https://billing-f81b.onrender.com/api/bills';
 
   constructor(private http: HttpClient) { }
 

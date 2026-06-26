@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class SettingsService {
-  private apiUrl = 'http://localhost:8080/api/settings';
+  private apiUrl = 'https://billing-f81b.onrender.com/api/settings';
 
   constructor(private http: HttpClient) { }
 
