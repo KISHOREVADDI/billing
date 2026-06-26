@@ -1,0 +1,22 @@
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
+
+<nav class="bottom-nav" *ngIf="authService.isLoggedIn()">
+  <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>home</mat-icon>
+    <span>Home</span>
+  </a>
+  <a routerLink="/bills" routerLinkActive="active">
+    <mat-icon>receipt</mat-icon>
+    <span>Bills</span>
+  </a>
+  <a routerLink="/settings" routerLinkActive="active">
+    <mat-icon>settings</mat-icon>
+    <span>Settings</span>
+  </a>
+  <a (click)="authService.logout()">
+    <mat-icon>logout</mat-icon>
+    <span>Logout</span>
+  </a>
+</nav>

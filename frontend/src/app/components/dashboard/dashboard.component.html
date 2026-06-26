@@ -1,0 +1,68 @@
+<div class="container-fluid pt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="m-0 font-weight-bold">Dashboard</h3>
+    <button mat-icon-button color="primary">
+      <mat-icon>notifications</mat-icon>
+    </button>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-6">
+      <mat-card class="stat-card bg-primary text-white">
+        <mat-card-content>
+          <mat-icon>currency_rupee</mat-icon>
+          <div class="stat-value">₹{{ todaySales | number:'1.0-0' }}</div>
+          <div class="stat-label">Today's Sales</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-6">
+      <mat-card class="stat-card bg-info text-white">
+        <mat-card-content>
+          <mat-icon>receipt</mat-icon>
+          <div class="stat-value">{{ todayBillsCount }}</div>
+          <div class="stat-label">Today's Bills</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12">
+      <mat-card class="stat-card bg-success text-white">
+        <mat-card-content class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="stat-value">₹{{ monthlyRevenue | number:'1.0-0' }}</div>
+            <div class="stat-label">Monthly Revenue</div>
+          </div>
+          <mat-icon style="font-size: 40px; width: 40px; height: 40px; opacity: 0.8">trending_up</mat-icon>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <h5 class="mt-4 mb-3">Quick Actions</h5>
+  <div class="row g-3">
+    <div class="col-6">
+      <div class="quick-action-card" routerLink="/create-bill">
+        <div class="icon-wrapper bg-primary-light text-primary">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </div>
+        <span>Create Bill</span>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="quick-action-card" routerLink="/bills">
+        <div class="icon-wrapper bg-info-light text-info">
+          <mat-icon>list_alt</mat-icon>
+        </div>
+        <span>View Bills</span>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="quick-action-card" routerLink="/settings">
+        <div class="icon-wrapper bg-warning-light text-warning">
+          <mat-icon>store</mat-icon>
+        </div>
+        <span>Shop Settings</span>
+      </div>
+    </div>
+  </div>
+</div>

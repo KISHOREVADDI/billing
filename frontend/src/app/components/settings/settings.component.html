@@ -1,0 +1,51 @@
+<div class="container-fluid pt-4 pb-5">
+  <div class="d-flex align-items-center mb-4">
+    <h3 class="m-0 font-weight-bold">Shop Settings</h3>
+  </div>
+
+  <mat-card class="settings-card mb-4">
+    <mat-card-content>
+      <form (ngSubmit)="saveSettings()" #settingsForm="ngForm">
+        
+        <h5 class="text-primary mb-3"><mat-icon class="align-middle">storefront</mat-icon> Basic Info</h5>
+        
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>Shop Name</mat-label>
+          <input matInput [(ngModel)]="settings.shopName" name="shopName" required>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>Owner Name</mat-label>
+          <input matInput [(ngModel)]="settings.ownerName" name="ownerName">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>Address</mat-label>
+          <textarea matInput [(ngModel)]="settings.address" name="address" rows="2"></textarea>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>GST Number</mat-label>
+          <input matInput [(ngModel)]="settings.gstNumber" name="gstNumber">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>Mobile Number</mat-label>
+          <input matInput type="tel" [(ngModel)]="settings.mobileNumber" name="mobileNumber">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>UPI ID (For QR Payment)</mat-label>
+          <input matInput [(ngModel)]="settings.upiId" name="upiId">
+        </mat-form-field>
+        
+        <div class="mt-4">
+          <button mat-flat-button color="primary" class="w-100 py-3 rounded-pill" type="submit" [disabled]="!settingsForm.form.valid">
+            SAVE SETTINGS
+          </button>
+        </div>
+        
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,107 @@
+<div class="receipt-container no-print">
+  <div class="receipt-actions d-flex justify-content-end mb-2">
+    <button mat-icon-button (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="receipt" id="printable-receipt">
+    <div class="receipt-header text-center">
+      <h2 class="shop-name">{{data.settings?.shopName || 'SRI VENKATESHWARA CUT PIECES'}}</h2>
+      <div class="shop-founder" *ngIf="data.settings?.ownerName">Founder : {{data.settings.ownerName}}</div>
+      <div class="shop-address">{{data.settings?.address || 'NTR Street, Telikicherla'}}</div>
+      <div class="shop-mobile">Mobile : +91 {{data.settings?.mobileNumber || 'XXXXX XXXXX'}}</div>
+    </div>
+    
+    <div class="receipt-divider"></div>
+    
+    <div class="receipt-info">
+      <div class="d-flex justify-content-between">
+        <div><strong>Bill No :</strong> {{data.bill.billNumber}}</div>
+        <div><strong>Date :</strong> {{data.bill.date | date:'dd-MMM-yyyy'}}</div>
+      </div>
+      <div class="mt-1">
+        <strong>Customer :</strong> {{data.bill.customerName || '________________'}}
+      </div>
+      <div class="mt-1">
+        <strong>Mobile :</strong> {{data.bill.mobileNumber || '________________'}}
+      </div>
+    </div>
+    
+    <div class="receipt-divider"></div>
+    
+    <table class="receipt-table">
+      <thead>
+        <tr>
+          <th width="10%">S.No</th>
+          <th width="40%">Item Name</th>
+          <th width="10%">Qty</th>
+          <th width="15%">Unit</th>
+          <th width="10%">Rate</th>
+          <th width="15%" class="text-right">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.bill.items; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{item.itemName}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.unit || 'Pcs'}}</td>
+          <td>{{item.rate}}</td>
+          <td class="text-right">{{item.amount}}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="receipt-divider"></div>
+    
+    <div class="receipt-totals">
+      <div class="d-flex justify-content-end">
+        <div class="totals-label">Sub Total :</div>
+        <div class="totals-value">?{{data.bill.subtotal}}</div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="totals-label">Discount :</div>
+        <div class="totals-value">?{{data.bill.discount}}</div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="totals-label">GST :</div>
+        <div class="totals-value">?{{data.bill.gst}}</div>
+      </div>
+      <div class="d-flex justify-content-end mt-1 fw-bold fs-6">
+        <div class="totals-label">Grand Total :</div>
+        <div class="totals-value">?{{data.bill.grandTotal}}</div>
+      </div>
+    </div>
+    
+    <div class="receipt-divider"></div>
+    
+    <div class="receipt-footer">
+      <div class="mb-3"><strong>Payment :</strong> Cash / UPI / Card</div>
+      <div class="d-flex justify-content-between align-items-end mt-4">
+        <div class="qr-placeholder text-center">
+          <img *ngIf="data.settings?.qrCodeBase64" [src]="data.settings.qrCodeBase64" alt="QR" width="80" height="80">
+          <img *ngIf="!data.settings?.qrCodeBase64 && data.settings?.upiId" [src]="'https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=upi://pay?pa=' + data.settings.upiId + '%26am=' + data.bill.grandTotal + '%26tn=Bill_' + data.bill.billNumber" alt="QR" width="80" height="80">
+          <div *ngIf="!data.settings?.qrCodeBase64 && !data.settings?.upiId" class="dummy-qr">QR CODE</div>
+        </div>
+        <div class="signature-box text-center">
+          <img *ngIf="data.settings?.stampBase64" [src]="data.settings.stampBase64" alt="Stamp" style="max-height: 50px; margin-bottom: 5px;">
+          <div class="border-top border-dark pt-1" style="width: 120px;">Authorized Signature</div>
+        </div>
+      </div>
+      
+      <div class="receipt-divider mt-3"></div>
+      
+      <div class="text-center mt-2 small fw-bold">
+        <div>Thank You For Shopping With Us!</div>
+        <div>Goods Once Sold Will Not Be Taken Back</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="d-flex justify-content-center mt-3 mb-2">
+    <button mat-flat-button color="primary" (click)="printBill()">
+      <mat-icon>print</mat-icon> Print Thermal Receipt
+    </button>
+  </div>
+</div>

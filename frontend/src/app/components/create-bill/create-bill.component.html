@@ -1,0 +1,128 @@
+<div class="container-fluid pt-3 pb-5 mb-5">
+  <div class="d-flex align-items-center mb-3">
+    <button mat-icon-button (click)="null" routerLink="/dashboard">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h3 class="m-0 ms-2 font-weight-bold">New Bill</h3>
+  </div>
+
+  <mat-card class="mb-3 custom-card">
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="w-100 mb-2">
+        <mat-label>Customer Name</mat-label>
+        <input matInput [(ngModel)]="bill.customerName" (ngModelChange)="bill.customerName = $event ? $event.toUpperCase() : ''" style="text-transform: uppercase;">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Mobile Number</mat-label>
+        <input matInput type="tel" [(ngModel)]="bill.mobileNumber">
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="m-0">Items</h5>
+    <button mat-flat-button color="primary" (click)="addItem()">
+      <mat-icon>add</mat-icon> Add
+    </button>
+  </div>
+
+  <div *ngFor="let item of bill.items; let i = index" class="item-card mb-2">
+    <mat-card class="custom-card">
+      <mat-card-content>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="fw-bold">Item {{i + 1}}</span>
+          <button mat-icon-button color="warn" (click)="removeItem(i)" *ngIf="bill.items.length > 1">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        
+        <div class="row g-2">
+          <div class="col-8">
+            <mat-form-field appearance="outline" class="w-100 mb-2">
+              <mat-label>Item Name</mat-label>
+              <input matInput [(ngModel)]="item.itemName">
+            </mat-form-field>
+          </div>
+          <div class="col-4">
+            <mat-form-field appearance="outline" class="w-100 mb-2">
+              <mat-label>Price Code</mat-label>
+              <input matInput [(ngModel)]="item.priceCode" (ngModelChange)="item.priceCode = $event ? $event.toUpperCase() : ''" style="text-transform: uppercase;">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row g-2 align-items-center">
+          <div class="col-4">
+            <mat-form-field appearance="outline" class="w-100 mb-0">
+              <mat-label>Rate</mat-label>
+              <input matInput type="number" [(ngModel)]="item.rate" (ngModelChange)="updateItemAmount(i)">
+            </mat-form-field>
+          </div>
+          <div class="col-4 d-flex justify-content-center align-items-center qty-control">
+            <button mat-icon-button class="small-icon-btn" (click)="changeQuantity(i, -1)">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <div class="d-flex flex-column align-items-center">
+              <span class="fw-bold">{{item.quantity}}</span>
+              <select class="form-select form-select-sm border-0 bg-transparent text-center px-0 mt-n1 text-muted" style="font-size: 10px; width: auto; appearance: none; outline: none; box-shadow: none; cursor: pointer;" [(ngModel)]="item.unit">
+                <option value="Pcs">Pcs</option>
+                <option value="Mtr">Mtr</option>
+                <option value="Kg">Kg</option>
+              </select>
+            </div>
+            <button mat-icon-button class="small-icon-btn" (click)="changeQuantity(i, 1)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div class="col-4 text-end">
+            <div class="text-muted small">Amount</div>
+            <div class="fw-bold fs-6">₹{{item.amount}}</div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="mt-3 custom-card bg-light">
+    <mat-card-content>
+      <div class="d-flex justify-content-between mb-2">
+        <span>Subtotal</span>
+        <span class="fw-bold">₹{{bill.subtotal}}</span>
+      </div>
+      <div class="d-flex justify-content-between mb-2 align-items-center">
+        <span>Discount (%)</span>
+        <div class="d-flex align-items-center">
+          <span class="text-muted small me-2" *ngIf="bill.discount > 0">-₹{{bill.discount}}</span>
+          <mat-form-field appearance="outline" class="compact-input">
+            <input matInput type="number" [(ngModel)]="bill.discountPercent" (ngModelChange)="calculateTotals()">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between mb-2 align-items-center">
+        <span>GST (%)</span>
+        <div class="d-flex align-items-center">
+          <span class="text-muted small me-2" *ngIf="bill.gst > 0">+₹{{bill.gst}}</span>
+          <mat-form-field appearance="outline" class="compact-input">
+            <input matInput type="number" [(ngModel)]="bill.gstPercent" (ngModelChange)="calculateTotals()">
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-divider class="my-2"></mat-divider>
+      <div class="d-flex justify-content-between">
+        <h4 class="m-0 text-primary font-weight-bold">Grand Total</h4>
+        <h4 class="m-0 text-primary font-weight-bold">₹{{bill.grandTotal}}</h4>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="sticky-action-bar">
+  <div class="d-flex px-3 py-2 w-100">
+    <div class="me-auto text-white d-flex flex-column justify-content-center">
+      <small>Total Amount</small>
+      <h4 class="m-0 fw-bold">₹{{bill.grandTotal}}</h4>
+    </div>
+    <button mat-flat-button color="accent" class="generate-btn" (click)="generateBill()">
+      Generate Bill
+    </button>
+  </div>
+</div>

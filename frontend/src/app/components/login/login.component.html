@@ -1,0 +1,43 @@
+<div class="login-container d-flex justify-content-center align-items-center vh-100">
+  <mat-card class="login-card w-100 mx-3" style="max-width: 400px;">
+    <mat-card-header class="d-flex justify-content-center mb-3">
+      <div class="shop-logo">
+        <mat-icon style="font-size: 48px; width: 48px; height: 48px; color: #3f51b5;">store</mat-icon>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <h2 class="text-center mb-4">Shop Billing App</h2>
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>Username</mat-label>
+          <input matInput [(ngModel)]="credentials.username" name="username" required>
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" [(ngModel)]="credentials.password" name="password" required>
+          <mat-icon matSuffix>visibility_off</mat-icon>
+        </mat-form-field>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <mat-checkbox [(ngModel)]="rememberMe" name="rememberMe">Remember Login</mat-checkbox>
+        </div>
+
+        <div *ngIf="errorMessage" class="text-danger mb-3 text-center">
+          {{ errorMessage }}
+        </div>
+
+        <button mat-flat-button color="primary" class="w-100 py-3" type="submit" [disabled]="!loginForm.form.valid">
+          {{ isLoginMode ? 'LOGIN' : 'REGISTER' }}
+        </button>
+
+        <div class="text-center mt-3">
+          <a href="javascript:void(0)" (click)="toggleMode()" class="text-decoration-none">
+            {{ isLoginMode ? "Don't have an account? Sign Up" : "Already have an account? Login" }}
+          </a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
